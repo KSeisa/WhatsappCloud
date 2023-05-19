@@ -21,50 +21,13 @@ app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 
 app.post("/webhook", (req, res) => {
-
-  let body = req.body;
-
-  console.log(JSON.stringify(req.body, null, 2));
+  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]) {
+    let from = req.body.entry[0].changes[0].value.messages[0].from;
+    let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+    console.log(`Incoming message from: ${from}`);
+    console.log(`Message body: ${msg_body}`);
+  }
 });
-
-// app.post("/webhook", (req, res) => {
-
-//   let body = req.body;
-
-//   console.log(JSON.stringify(req.body, null, 2));
-
-//   if (req.body.object) {
-//     if (
-//       req.body.entry &&
-//       req.body.entry[0].changes &&
-//       req.body.entry[0].changes[0] &&
-//       req.body.entry[0].changes[0].value.messages &&
-//       req.body.entry[0].changes[0].value.messages[0]
-//     ) {
-//       let phone_number_id =
-//         req.body.entry[0].changes[0].value.metadata.phone_number_id;
-//       let from = req.body.entry[0].changes[0].value.messages[0].from; 
-//       let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; 
-//       axios({
-//         method: "POST", 
-//         url:
-//           "https://graph.facebook.com/v12.0/" +
-//           phone_number_id +
-//           "/messages?access_token=" +
-//           token,
-//         data: {
-//           messaging_product: "whatsapp",
-//           to: from,
-//           text: { body: "Ack: " + msg_body },
-//         },
-//         headers: { "Content-Type": "application/json" },
-//       });
-//     }
-//     res.sendStatus(200);
-//   } else {
-//     res.sendStatus(404);
-//   }
-// });
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
@@ -92,8 +55,4 @@ app.get('/send', async (req, res) => {
     console.error('Error sending message:', error.message);
     res.sendStatus(500);
   }
-});
-
-app.get('/messages', (req, res) => {
-  console.log('sssssssss');
 });
