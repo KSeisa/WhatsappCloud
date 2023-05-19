@@ -49,7 +49,7 @@ bot.on('message', async (msg) => {
   console.log(msg);
 
   if (msg.type === 'text') {
-    console.log(`Incoming text message from: ${msg.from}`);
+    console.log(`Incoming text message frommmmmmmmmmmmm: ${msg.from}`);
     console.log(`Message body: ${msg.body}`);
     await bot.sendText(msg.from, 'Received your text message!');
   } else if (msg.type === 'image') {
