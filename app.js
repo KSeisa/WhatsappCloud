@@ -38,16 +38,3 @@ app.get("/webhook", (req, res) => {
     }
   }
 });
-
-app.get('/send', async (req, res) => {
-  const to = '27760411047';
-  try {
-    const result = await bot.sendText(to, 'Hello world Andre');
-
-    console.log(result);
-    res.sendStatus(200);
-  } catch (error) {
-    console.error('Error sending message:', error.message);
-    res.sendStatus(500);
-  }
-});
