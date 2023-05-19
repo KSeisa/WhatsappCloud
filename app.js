@@ -29,6 +29,7 @@ app.post("/webhook", (req, res) => {
   }
 });
 
+
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
@@ -43,6 +44,21 @@ app.get("/webhook", (req, res) => {
     }
   }
 });
+
+bot.on('message', async (msg) => {
+  console.log(msg);
+
+  if (msg.type === 'text') {
+    console.log(`Incoming text message from: ${msg.from}`);
+    console.log(`Message body: ${msg.body}`);
+    await bot.sendText(msg.from, 'Received your text message!');
+  } else if (msg.type === 'image') {
+    console.log(`Incoming image from: ${msg.from}`);
+    console.log(`Image URL: ${msg.url}`);
+    await bot.sendText(msg.from, 'Received your image!');
+  }
+});
+
 
 app.get('/send', async (req, res) => {
   const to = '27760411047';
