@@ -21,7 +21,7 @@ async function incomingMessageHandler(req, res) {
         welcomeMessageStep(sessionData, sender);
 
     } else if (sessionData.testSessionID) {
-        testSessionIDExistsStep(twiml, sessionData, messageBody);
+        testSessionIDExistsStep(sender, sessionData, messageBody);
 
     } else if (sessionData.testSessionIDMenu) {
       if (messageBody === '1') {

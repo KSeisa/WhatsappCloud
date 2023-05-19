@@ -21,19 +21,19 @@ function endSessionMessage(req, to) {
     req.session.destroy();
 }
 
-function testSessionIDExistsStep(twiml, sessionData, messageBody) {
+function testSessionIDExistsStep(to, sessionData, messageBody) {
     sessionData.UserInputSessionID = messageBody;
     if (testUserInputSessionID(sessionData)) {
       sessionData.testSessionID = false;
       sessionData.testSessionIDMenu = true;
-      mainMenuMessage(twiml);
+      mainMenuMessage(to);
     } else {
-      twiml.message('Session ID does not exist. Please enter another session ID.');
+      sendBasicMessage(to,'Session ID does not exist. Please enter another session ID.');
     }
 }
 
-function mainMenuMessage(twiml) {
-    twiml.message('Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
+function mainMenuMessage(to) {
+    sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
 }
 
 function invalidOptionOccur(twiml) {
