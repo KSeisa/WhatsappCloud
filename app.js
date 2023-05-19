@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 const app = express().use(bodyParser.json());
 
@@ -11,7 +12,8 @@ const { SESSION_SECRET, VERIFY_TOKEN, PORT} = process.env;
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  genid: () => uuidv4(), 
 }));
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
