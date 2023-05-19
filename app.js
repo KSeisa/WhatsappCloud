@@ -9,7 +9,7 @@ const request = require("request"),
   axios = require("axios").default,
   app = express().use(body_parser.json());
 
-app.listen(process.env.PORT, () => console.log("webhook is listening on port 3000"));
+app.listen(process.env.PORT, () => console.log(`webhook is listening on port ${process.env.PORT}`));
 
 
 app.post("/webhook", (req, res) => {
