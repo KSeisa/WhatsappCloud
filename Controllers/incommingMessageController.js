@@ -25,16 +25,16 @@ async function incomingMessageHandler(req, res) {
 
     } else if (sessionData.testSessionIDMenu) {
       if (messageBody === '1') {
-        viewParticipants(twiml, sessionData);
+        viewParticipants(sender, sessionData);
 
       } else if (messageBody === '2') {
-        viewSessionSummary(twiml, sessionData);
+        viewSessionSummary(sender, sessionData);
 
       } else if (messageBody === '3') {
-        viewSessionNotes(twiml, sessionData);
+        viewSessionNotes(sender, sessionData);
 
       } else if (messageBody === '4') {
-        viewTrends(twiml, sessionData, sender);
+        viewTrends(sender, sessionData);
 
       } else if (messageBody === '5') {
         twiml.message('Canceled option');
@@ -42,7 +42,7 @@ async function incomingMessageHandler(req, res) {
         welcomeMessageStep(twiml, sessionData);
 
       } else {
-        invalidOptionOccur(twiml);
+        invalidOptionOccur(sender);
 
       }
     } else {
