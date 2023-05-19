@@ -1,3 +1,7 @@
+const { createBot } = require('whatsapp-cloud-api');
+
+const bot = createBot(PHONE_NUMBER_ID, AUTH_TOKEN);
+
 async function sendBasicMessage(to, body) {
   try {
     const result = await bot.sendText(to, body);

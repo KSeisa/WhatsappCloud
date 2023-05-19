@@ -1,6 +1,7 @@
 const { welcomeMessageStep, resetSessionVariables, endSessionMessage, 
         testSessionIDExistsStep, invalidOptionOccur, viewParticipants, 
         viewSessionNotes, viewSessionSummary, viewTrends } = require('./sessionController');
+const { sendBasicMessage } = require('./whatsappMessageController');
 
 async function incomingMessageHandler(req, res) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
@@ -37,7 +38,7 @@ async function incomingMessageHandler(req, res) {
         viewTrends(sender, sessionData);
 
       } else if (messageBody === '5') {
-        twiml.message('Canceled option');
+        sendBasicMessage(sender,'Canceled option');
         resetSessionVariables(sessionData);
         welcomeMessageStep(twiml, sessionData);
 
@@ -46,7 +47,7 @@ async function incomingMessageHandler(req, res) {
 
       }
     } else {
-      twiml.message('Sorry, something went wrong, please try again or contact support');
+      sendBasicMessage(sender,'Sorry, something went wrong, please try again or contact support');
       resetSessionVariables(sessionData);
     }
   

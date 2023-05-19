@@ -6,9 +6,9 @@ const app = express().use(bodyParser.json());
 
 const { incomingMessageHandler } = require('./Controllers/incommingMessageController');
 
-const { createBot } = require('whatsapp-cloud-api');
-
 const { SESSION_SECRET, AUTH_TOKEN, PHONE_NUMBER_ID, VERIFY_TOKEN, PORT} = process.env;
+
+const { createBot } = require('whatsapp-cloud-api');
 
 const bot = createBot(PHONE_NUMBER_ID, AUTH_TOKEN);
 
