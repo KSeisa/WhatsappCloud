@@ -1,15 +1,23 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const axios = require("axios");
+require('dotenv').config();
+const app = express().use(bodyParser.json());
 
-"use strict";
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 
-const token = process.env.WHATSAPP_TOKEN;
+const { createBot } = require('whatsapp-cloud-api');
 
-const request = require("request"),
-  express = require("express"),
-  body_parser = require("body-parser"),
-  axios = require("axios").default,
-  app = express().use(body_parser.json());
+const { SESSION_SECRET, AUTH_TOKEN, PHONE_NUMBER_ID, VERIFY_TOKEN, PORT} = process.env;
 
-app.listen(process.env.PORT, () => console.log(`webhook is listening on port ${process.env.PORT}`));
+const bot = createBot(PHONE_NUMBER_ID, AUTH_TOKEN);
+
+app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 
 app.post("/webhook", (req, res) => {
@@ -17,49 +25,54 @@ app.post("/webhook", (req, res) => {
   let body = req.body;
 
   console.log(JSON.stringify(req.body, null, 2));
-
-  if (req.body.object) {
-    if (
-      req.body.entry &&
-      req.body.entry[0].changes &&
-      req.body.entry[0].changes[0] &&
-      req.body.entry[0].changes[0].value.messages &&
-      req.body.entry[0].changes[0].value.messages[0]
-    ) {
-      let phone_number_id =
-        req.body.entry[0].changes[0].value.metadata.phone_number_id;
-      let from = req.body.entry[0].changes[0].value.messages[0].from; 
-      let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; 
-      axios({
-        method: "POST", 
-        url:
-          "https://graph.facebook.com/v12.0/" +
-          phone_number_id +
-          "/messages?access_token=" +
-          token,
-        data: {
-          messaging_product: "whatsapp",
-          to: from,
-          text: { body: "Ack: " + msg_body },
-        },
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(404);
-  }
 });
 
-app.get("/webhook", (req, res) => {
-  const verify_token = process.env.VERIFY_TOKEN;
+// app.post("/webhook", (req, res) => {
 
+//   let body = req.body;
+
+//   console.log(JSON.stringify(req.body, null, 2));
+
+//   if (req.body.object) {
+//     if (
+//       req.body.entry &&
+//       req.body.entry[0].changes &&
+//       req.body.entry[0].changes[0] &&
+//       req.body.entry[0].changes[0].value.messages &&
+//       req.body.entry[0].changes[0].value.messages[0]
+//     ) {
+//       let phone_number_id =
+//         req.body.entry[0].changes[0].value.metadata.phone_number_id;
+//       let from = req.body.entry[0].changes[0].value.messages[0].from; 
+//       let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; 
+//       axios({
+//         method: "POST", 
+//         url:
+//           "https://graph.facebook.com/v12.0/" +
+//           phone_number_id +
+//           "/messages?access_token=" +
+//           token,
+//         data: {
+//           messaging_product: "whatsapp",
+//           to: from,
+//           text: { body: "Ack: " + msg_body },
+//         },
+//         headers: { "Content-Type": "application/json" },
+//       });
+//     }
+//     res.sendStatus(200);
+//   } else {
+//     res.sendStatus(404);
+//   }
+// });
+
+app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
 
   if (mode && token) {
-    if (mode === "subscribe" && token === verify_token) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
       console.log("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
     } else {
