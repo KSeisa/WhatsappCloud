@@ -5,17 +5,17 @@ const axios = require("axios");
 require('dotenv').config();
 const app = express().use(bodyParser.json());
 
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
-
 const { createBot } = require('whatsapp-cloud-api');
 
 const { SESSION_SECRET, AUTH_TOKEN, PHONE_NUMBER_ID, VERIFY_TOKEN, PORT} = process.env;
 
 const bot = createBot(PHONE_NUMBER_ID, AUTH_TOKEN);
+
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
