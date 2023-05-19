@@ -94,6 +94,6 @@ app.get('/send', async (req, res) => {
   }
 });
 
-app.get('/message', (req, res) => {
+app.get('/messages', (req, res) => {
   console.log('sssssssss');
 });
