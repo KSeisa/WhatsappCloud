@@ -4,18 +4,18 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
 const { sendBasicMessage } = require('./whatsappMessageController');
 
 async function incomingMessageHandler(req, res) {
-    const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
-    const sender = req.body.entry[0].changes[0].value.messages[0].from;
-    const SessionId = req.session.id;
-    const sessionData = req.session;
-  
-    if (!sessionData.newSession && testIncommingMessage(req)) {
-      sessionData.newSession = true;
-      sessionData.backToMainMenu = true;
-    }
+    if (testIncommingMessage(req)) {
+      const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
+      const sender = req.body.entry[0].changes[0].value.messages[0].from;
+      const SessionId = req.session.id;
+      const sessionData = req.session;
 
-  console.log(sender);
-    if (messageBody.toLowerCase() === 'sstop' && testIncommingMessage(req)) {
+      if (!sessionData.newSession && testIncommingMessage(req)) {
+        sessionData.newSession = true;
+        sessionData.backToMainMenu = true;
+      }
+
+      if (messageBody.toLowerCase() === 'sstop' && testIncommingMessage(req)) {
         endSessionMessage(req, sender);
 
     } else if (sessionData.backToMainMenu && testIncommingMessage(req)) {
@@ -53,14 +53,19 @@ async function incomingMessageHandler(req, res) {
   
     res.set('Content-Type', 'text/xml');
     console.log(SessionId);
+    }
 }
 
 function testIncommingMessage(req) {
-  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]) {
-    return true;
+  try {
+    if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]) {
+      return true;
+    }
+    else
+    return false;
+  } catch (error) {
+    return false;
   }
-  else
-  return false;
 }
    
 module.exports = {
