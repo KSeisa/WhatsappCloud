@@ -58,25 +58,13 @@ async function incomingMessageHandler(req, res) {
   if (testIncomingMessage(req)) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
-    const sessionId = req.session.id;
-    const sessionData = req.session;
 
-    if (req.body.sessionId) {
-      sessionId = req.body.sessionId;
-    }
-
-    if (!sessionData.newSession) {
-      sessionData.newSession = true;
-      sessionData.backToMainMenu = true;
-    }
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(req, sender);
     } else {
-      sendBasicMessage(sender, 'Sup man: ' + sessionId);
+      sendBasicMessage(sender, 'Sup man: ');
     }
-    
-    console.log(sessionId);
   }
   
   res.sendStatus(200); 
