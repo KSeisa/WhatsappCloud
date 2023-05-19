@@ -17,7 +17,7 @@ app.use(session({
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 app.post("/webhook", async (req, res) => {
-  incomingMessageHandler(req, res);
+  incomingMessageHandler(req);
 });
 
 app.get("/webhook", (req, res) => {

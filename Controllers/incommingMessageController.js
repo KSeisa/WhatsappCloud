@@ -54,7 +54,7 @@ const { sendBasicMessage } = require('./whatsappMessageController');
 //     }
 // }
 
-async function incomingMessageHandler(req, res) {
+async function incomingMessageHandler(req) {
   if (testIncommingMessage(req)) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
