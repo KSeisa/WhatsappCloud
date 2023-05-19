@@ -19,16 +19,30 @@ app.use(session({
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
-
-app.post("/webhook", (req, res) => {
-  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]) {
-    let from = req.body.entry[0].changes[0].value.messages[0].from;
-    let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
-    console.log(`Incoming message from: ${from}`);
-    console.log(`Message body: ${msg_body}`);
+app.post("/webhook", async (req, res) => {
+  if (testIncommingMessage(req)) {
+    const to = '27760411047';
+    try {
+      const result = await bot.sendText(to, 'Hello world Andre');
+  
+      console.log(result);
+      res.sendStatus(200);
+    } catch (error) {
+      console.error('Error sending message:', error.message);
+      res.sendStatus(500);
+    }
   }
 });
 
+function testIncommingMessage(req) {
+  if (req.body.entry && req.body.entry[0].changes && req.body.entry[0].changes[0] && req.body.entry[0].changes[0].value.messages && req.body.entry[0].changes[0].value.messages[0]) {
+    let from = req.body.entry[0].changes[0].value.messages[0].from;
+    let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body;
+    return true;
+  }
+  else
+  return false;
+}
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
@@ -44,21 +58,6 @@ app.get("/webhook", (req, res) => {
     }
   }
 });
-
-bot.on('message', async (msg) => {
-  console.log(msg);
-
-  if (msg.type === 'text') {
-    console.log(`Incoming text message frommmmmmmmmmmmm: ${msg.from}`);
-    console.log(`Message body: ${msg.body}`);
-    await bot.sendText(msg.from, 'Received your text message!');
-  } else if (msg.type === 'image') {
-    console.log(`Incoming image from: ${msg.from}`);
-    console.log(`Image URL: ${msg.url}`);
-    await bot.sendText(msg.from, 'Received your image!');
-  }
-});
-
 
 app.get('/send', async (req, res) => {
   const to = '27760411047';
