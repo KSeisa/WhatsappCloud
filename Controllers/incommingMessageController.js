@@ -61,6 +61,10 @@ async function incomingMessageHandler(req, res) {
     const sessionId = req.session.id;
     const sessionData = req.session;
 
+    if (req.body.sessionId) {
+      sessionId = req.body.sessionId;
+    }
+
     if (!sessionData.newSession) {
       sessionData.newSession = true;
       sessionData.backToMainMenu = true;
