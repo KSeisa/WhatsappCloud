@@ -13,7 +13,9 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  genid: () => uuidv4(), 
+  genid: (req) => {
+    return req.sessionID || uuidv4();
+  },
 }));
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
