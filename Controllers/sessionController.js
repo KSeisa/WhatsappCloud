@@ -1,15 +1,14 @@
-const { testUserInputSessionID } = require('./healthCheckController');
+const { testUserInputSessionID } = require('./healthCheckController');userInputSessionID
 const { sendBasicMessage } = require('./whatsappMessageController');
 const { lineChart, verticalBarChart, horizontalBarChart, pieChart, doughnutChart } = require('./generateImagesController');
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
-function resetSessionVariables(sessionData) {
-    sessionData.newSession = true;
-    sessionData.backToMainMenu = true;
-    sessionData.testSessionID = false;
-    sessionData.UserInputSessionID = '';
-    sessionData.testSessionIDMenu = false;
+function resetSessionVariables(sessionObj) {
+    sessionObj.backToMainMenu = true;
+    sessionObj.testSessionID = false;
+    sessionObj.userInputSessionID = '';
+    sessionObj.testSessionIDMenu = false;
 }
 
 async function welcomeMessageStep(to, sessionObj) {
@@ -47,14 +46,15 @@ async function updateDocumentById(number, updateFields) {
   }
 
 function endSessionMessage(to) {
-    sendBasicMessage(to,'Please take care. Goodbye :)');
+    sendBasicMessage(to, 'Please take care. Goodbye :)');
 }
 
-function testSessionIDExistsStep(to, sessionData, messageBody) {
-    sessionData.UserInputSessionID = messageBody;
-    if (testUserInputSessionID(sessionData)) {
-      sessionData.testSessionID = false;
-      sessionData.testSessionIDMenu = true;
+async function testSessionIDExistsStep(to, sessionObj, messageBody) {
+    sessionObj.userInputSessionID = messageBody;
+    if (testUserInputSessionID(sessionObj)) {
+        sessionObj.testSessionID = false;
+        sessionObj.testSessionIDMenu = true;
+        await updateDocumentById(to, sessionObj);
       mainMenuMessage(to);
     } else {
       sendBasicMessage(to,'Session ID does not exist. Please enter another session ID.');
