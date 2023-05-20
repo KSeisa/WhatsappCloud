@@ -62,7 +62,8 @@ async function incomingMessageHandler(req, res) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
 
-    await testSessionExist(sender);
+    const sessionObj = await testSessionExist(sender);
+    console.log(sessionObj);
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
