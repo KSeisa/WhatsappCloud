@@ -6,16 +6,6 @@ const { sendBasicMessage } = require('./whatsappMessageController');
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
-async function connectMongoDB(){
-  const client = new MongoClient(uri);
-  await client.connect();
-
-  const database = client.db('Entelect');
-  const collection = database.collection('HealthCheck');
-  return collection;
-}
-const collection = await connectMongoDB();
-
 // async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
 //       const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
@@ -71,14 +61,14 @@ async function incomingMessageHandler(req, res) {
   if (testIncomingMessage(req)) {
     const { messageBody, sender } = getMessageDetails(req);
 
-    const sessionObj = await testSessionExist(sender, collection);
+    const sessionObj = await testSessionExist(sender);
 
     if (messageBody.toLowerCase() === 'stop') {
       endSessionMessage(sender);
-      await endSessionDelete(sender, collection);
+      await endSessionDelete(sender);
 
     } else if (sessionObj.backToMainMenu) {
-      await welcomeMessageStep(sender, sessionObj,collection);
+      await welcomeMessageStep(sender, sessionObj);
 
     } else if (sessionObj.testSessionID) {
       await testSessionIDExistsStep(sender, sessionObj, messageBody);
@@ -112,19 +102,19 @@ function testIncomingMessage(req) {
   }
 }
 
-async function testSessionExist(number, collection) {
+async function testSessionExist(number) {
   try {
-    // const client = new MongoClient(uri);
-    // await client.connect();
+    const client = new MongoClient(uri);
+    await client.connect();
 
-    // const database = client.db('Entelect');
-    // const collection = database.collection('HealthCheck');
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
 
     const existingDoc = await collection.findOne({ _id: number });
 
     if (existingDoc) {
         console.log('Number already exists in the database: ', number);
-     //   client.close();
+        client.close();
         return existingDoc;
       } else {
         const newDoc = { 
@@ -136,7 +126,7 @@ async function testSessionExist(number, collection) {
         };
         const result = await collection.insertOne(newDoc);
         console.log('New document added for: ', number);
-    //    client.close();
+        client.close();
         return newDoc;
       }
   } catch (err) {
@@ -145,13 +135,13 @@ async function testSessionExist(number, collection) {
   }
 }
 
-async function endSessionDelete(number, collection) {
+async function endSessionDelete(number) {
   try {
-    // const client = new MongoClient(uri);
-    // await client.connect();
+    const client = new MongoClient(uri);
+    await client.connect();
 
-    // const database = client.db('Entelect');
-    // const collection = database.collection('HealthCheck');
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
 
     const result = await collection.deleteOne({ _id: number });
 
