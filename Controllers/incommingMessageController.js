@@ -64,7 +64,7 @@ async function incomingMessageHandler(req, res) {
 
     const sessionObj = await testSessionExist(sender);
 
-    if (messageBody.toLowerCase() === 'sstop') {
+    if (messageBody.toLowerCase() === 'stop') {
       endSessionMessage(sender);
       await endSessionDelete(sender);
 
