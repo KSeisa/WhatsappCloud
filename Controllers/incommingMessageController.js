@@ -3,8 +3,8 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
         viewSessionNotes, viewSessionSummary, viewTrends } = require('./sessionController');
 const { sendBasicMessage } = require('./whatsappMessageController');
 
-// const { MongoClient } = require('mongodb');
-// const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
 // async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
