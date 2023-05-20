@@ -61,9 +61,9 @@ async function incomingMessageHandler(req, res) {
 
 
     if (messageBody.toLowerCase() === 'sstop') {
-      endSessionMessage(req, sender);
+      endSessionMessage(sender);
     } else {
-      sendBasicMessage(sender, 'Sup man: ');
+      sendBasicMessage(sender, 'Sup manski ');
     }
   }
   

@@ -16,9 +16,8 @@ function welcomeMessageStep(sessionData, to) {
     sessionData.testSessionID = true;
 }
 
-function endSessionMessage(req, to) {
+function endSessionMessage(to) {
     sendBasicMessage(to,'Please take care. Goodbye :)');
-    req.session.destroy();
 }
 
 function testSessionIDExistsStep(to, sessionData, messageBody) {
