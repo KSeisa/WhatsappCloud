@@ -57,7 +57,7 @@ const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?r
 //     }
 // }
 
-async function incomingMessageHandler(req, res, client) {
+async function incomingMessageHandler(req, res) {
   if (testIncomingMessage(req)) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
