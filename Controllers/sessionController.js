@@ -75,7 +75,7 @@ async function viewSessionNotes(to) {
 
 async function viewTrends(to) {
     const imageUrl = await pieChart();
-    sendBasicMediaMessage(to, imageUrl);
+    await sendBasicMediaMessage(to, imageUrl);
 }
   
 module.exports = {
