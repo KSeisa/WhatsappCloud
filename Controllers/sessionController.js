@@ -12,7 +12,7 @@ function resetSessionVariables(sessionObj) {
 }
 
 async function welcomeMessageStep(to, sessionObj) {
-    sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!*\nReply ```sstop``` to end the session anytime.\n\nPlease enter the session ID:');
+    sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!*\nReply ```stop``` to end the session anytime.\n\nPlease enter the session ID:');
     sessionObj.backToMainMenu = false;
     sessionObj.testSessionID = true;
     await updateDocumentById(to, sessionObj);
