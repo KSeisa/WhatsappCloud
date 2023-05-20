@@ -130,7 +130,6 @@ async function testSessionExist(number) {
     const existingDoc = await collection.findOne({ _id: number });
 
     if (existingDoc) {
-        console.log('Number already exists in the database: ', number);
         return existingDoc;
       } else {
         const newDoc = { 
