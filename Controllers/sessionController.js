@@ -11,22 +11,15 @@ function resetSessionVariables(sessionObj) {
     sessionObj.testSessionIDMenu = false;
 }
 
-async function welcomeMessageStep(to, sessionObj) {
+async function welcomeMessageStep(to, sessionObj, collection) {
     sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!*\nReply ```stop``` to end the session anytime.\n\nPlease enter the session ID:');
     sessionObj.backToMainMenu = false;
     sessionObj.testSessionID = true;
-    await updateDocumentById(to, sessionObj);
+    await updateDocumentById(to, sessionObj, collection);
 }
 
-async function updateDocumentById(number, updateFields) {
+async function updateDocumentById(number, updateFields, collection) {
     try {
-        const client = new MongoClient(uri);
-
-      await client.connect();
-  
-      const database = client.db('Entelect');
-      const collection = database.collection('HealthCheck');
-  
       const result = await collection.updateOne(
         { _id: number },
         { $set: updateFields }
