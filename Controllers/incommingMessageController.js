@@ -65,7 +65,7 @@ async function incomingMessageHandler(req, res) {
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
-      connectToMongoDB(sender);
+      await connectToMongoDB(sender);
     } else {
       sendBasicMessage(sender, 'Sup manski ');
     }
