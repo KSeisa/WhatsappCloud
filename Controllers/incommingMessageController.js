@@ -172,6 +172,13 @@ async function endSessionDelete(number) {
   }
   return false;
 }
+
+connectToDatabase();
+
+process.on('SIGINT', async () => {
+  await closeDatabaseConnection();
+  process.exit(0);
+});
    
 module.exports = {
     incomingMessageHandler,
