@@ -11,25 +11,32 @@ const { VERIFY_TOKEN, PORT, MONGODB_URI } = process.env;
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
-// app.post("/webhook", async (req, res) => {
-//   incomingMessageHandler(req, res);
-// });
+app.post("/webhook", async (req, res) => {
+  incomingMessageHandler(req, res);
+});
 
-MongoClient.connect(MONGODB_URI, { useUnifiedTopology: true })
-  .then((client) => {
-    console.log('Connected to MongoDB');
+const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+
+async function connectToMongoDB() {
+  try {
+    const client = new MongoClient(uri);
     
+    await client.connect();
+
     const database = client.db('Entelect');
     const collection = database.collection('HealthCheck');
 
-    app.post('/webhook', async (req, res) => {
-      incomingMessageHandler(req, res, collection);
-    });
-  })
-  .catch((err) => {
+    // Perform operations on the collection
+
+    client.close();
+    console.log('Disconnected from MongoDB');
+  } catch (err) {
     console.error('Error connecting to MongoDB:', err);
     process.exit(1);
-  });
+  }
+}
+
+connectToMongoDB();
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
