@@ -19,8 +19,8 @@ MongoClient.connect(MONGODB_URI, { useUnifiedTopology: true })
   .then((client) => {
     console.log('Connected to MongoDB');
     
-    const db = client.db();
-    const collection = db.collection('yourCollectionName');
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
 
     app.post('/webhook', async (req, res) => {
       incomingMessageHandler(req, res, collection);
