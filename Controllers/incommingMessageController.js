@@ -2,7 +2,7 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
         testSessionIDExistsStep, invalidOptionOccur, viewParticipants, 
         viewSessionNotes, viewSessionSummary, viewTrends } = require('./sessionController');
 const { sendBasicMessage } = require('./whatsappMessageController');
-const { connectToDatabase, closeDatabaseConnection, testSessionExist, endSessionDelete } = require('./mongodbController');
+const { testSessionExist, endSessionDelete } = require('./mongodbController');
 
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
