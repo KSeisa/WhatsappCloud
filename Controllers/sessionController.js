@@ -63,7 +63,6 @@ function invalidOptionOccur(to) {
 
 function viewParticipants(to) {
     sendBasicMessage(to,'*The participants in the Team 1 - 09/03/2023 are as follows:*\n1. Zane - Host\n2. Wesley Chetty - Member');
-    mainMenuMessage(to);
 }
 
 function viewSessionSummary(to) {
@@ -72,7 +71,6 @@ function viewSessionSummary(to) {
 
 function viewSessionNotes(to) {
     sendBasicMessage(to,'Session notes');
-    mainMenuMessage(to);
 }
 
 async function viewTrends(to) {
