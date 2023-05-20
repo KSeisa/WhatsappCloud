@@ -71,7 +71,7 @@ async function incomingMessageHandler(req, res) {
     } else if (sessionObj.backToMainMenu) {
       await welcomeMessageStep(sender, sessionObj);
 
-    } else if (sessionData.testSessionID) {
+    } else if (sessionObj.testSessionID) {
       await testSessionIDExistsStep(sender, sessionObj, messageBody);
 
     } 
