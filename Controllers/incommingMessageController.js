@@ -62,10 +62,11 @@ async function incomingMessageHandler(req, res) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
 
+    await testSessionExist(sender);
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
-      await connectToMongoDB(sender);
+      await endSessionDelete(sender);
     } else {
       sendBasicMessage(sender, 'Sup manski ');
     }
@@ -86,7 +87,7 @@ function testIncomingMessage(req) {
   }
 }
 
-async function connectToMongoDB(number) {
+async function testSessionExist(number) {
   try {
     const client = new MongoClient(uri);
     await client.connect();
@@ -97,7 +98,9 @@ async function connectToMongoDB(number) {
     const existingDoc = await collection.findOne({ _id: number });
 
     if (existingDoc) {
-        console.log('Number already exists in the database:', existingDoc);
+        console.log('Number already exists in the database: ', number);
+        client.close();
+        return true;
       } else {
         const newDoc = { 
             _id: number,
@@ -107,14 +110,38 @@ async function connectToMongoDB(number) {
             testSessionIDMenu: false,
         };
         const result = await collection.insertOne(newDoc);
-        console.log('New document added:', result);
+        console.log('New document added for: ', number);
+        client.close();
+        return false;
       }
-    console.log('eeeeeeeeeeeeeeeeeeee');
-    client.close();
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);
-    process.exit(1);
+    return false;
   }
+}
+
+async function endSessionDelete(number) {
+  try {
+    const client = new MongoClient(uri);
+    await client.connect();
+
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
+
+    const result = await collection.deleteOne({ _id: number });
+
+    if (result.deletedCount === 1) {
+      console.log('Document deleted successfully');
+      return true;
+    } else {
+      console.log('Document not found');
+    }
+
+    console.log('Disconnected from MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+  }
+  return false;
 }
    
 module.exports = {
