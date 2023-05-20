@@ -1,17 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const { MongoClient } = require('mongodb');
+
 const app = express().use(bodyParser.json());
 
 const { incomingMessageHandler } = require('./Controllers/incommingMessageController');
 
-const { VERIFY_TOKEN, PORT} = process.env;
+const { VERIFY_TOKEN, PORT, MONGODB_URI } = process.env;
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
-app.post("/webhook", async (req, res) => {
-  incomingMessageHandler(req, res);
-});
+// app.post("/webhook", async (req, res) => {
+//   incomingMessageHandler(req, res);
+// });
+
+MongoClient.connect(MONGODB_URI, { useUnifiedTopology: true })
+  .then((client) => {
+    console.log('Connected to MongoDB');
+    
+    const db = client.db();
+    const collection = db.collection('yourCollectionName');
+
+    app.post('/webhook', async (req, res) => {
+      incomingMessageHandler(req, res, collection);
+    });
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1);
+  });
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
