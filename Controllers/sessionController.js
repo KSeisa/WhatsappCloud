@@ -31,8 +31,6 @@ async function updateDocumentById(number, updateFields, client) {
       } else {
         console.log('Document not found');
       }
-  
-      console.log('Disconnected from MongoDB');
     } catch (err) {
       console.error('Error connecting to MongoDB:', err);
     }
