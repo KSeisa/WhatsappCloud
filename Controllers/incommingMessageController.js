@@ -33,7 +33,7 @@ async function incomingMessageHandler(req, res) {
     const sessionObj = await testSessionExist(sender);
 
     if (messageBody.toLowerCase() === 'stop') {
-      endSessionMessage(sender);
+      await endSessionMessage(sender);
       await endSessionDelete(sender, client);
 
     } else if (sessionObj.backToMainMenu) {
@@ -44,29 +44,29 @@ async function incomingMessageHandler(req, res) {
 
     } else if (sessionObj.testSessionIDMenu) {
       if (messageBody === '1') {
-        viewParticipants(sender);
+        await viewParticipants(sender);
 
       } else if (messageBody === '2') {
-        viewSessionSummary(sender);
+        await viewSessionSummary(sender);
 
       } else if (messageBody === '3') {
-        viewSessionNotes(sender);
+        await viewSessionNotes(sender);
 
       } else if (messageBody === '4') {
-        viewTrends(sender);
+        await viewTrends(sender);
 
       } else if (messageBody === '5') {
-        sendBasicMessage(sender,'Canceled option');
+        await sendBasicMessage(sender,'Canceled option');
         await resetSessionVariables(sender, sessionObj, client);
         await welcomeMessageStep(sender, sessionObj, client);
 
       } else {
-        invalidOptionOccur(sender);
+        await invalidOptionOccur(sender);
 
       }
     }
     else {
-      sendBasicMessage(sender, 'Sorry, something went wrong, please try again or contact support');
+      await sendBasicMessage(sender, 'Sorry, something went wrong, please try again or contact support');
       await resetSessionVariables(sender, sessionObj, client);
     }
   } 

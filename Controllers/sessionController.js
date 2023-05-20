@@ -37,8 +37,8 @@ async function updateDocumentById(number, updateFields, client) {
     }
   }
 
-function endSessionMessage(to) {
-    sendBasicMessage(to, 'Please take care. Goodbye :)');
+async function endSessionMessage(to) {
+    await sendBasicMessage(to, 'Please take care. Goodbye :)');
 }
 
 async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
@@ -53,24 +53,24 @@ async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
     }
 }
 
-function mainMenuMessage(to) {
-    sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
+async function mainMenuMessage(to) {
+    await sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
 }
 
-function invalidOptionOccur(to) {
-    sendBasicMessage(to,'*Invalid option*\nPlease select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
+async function invalidOptionOccur(to) {
+    await sendBasicMessage(to,'*Invalid option*\nPlease select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
 }
 
-function viewParticipants(to) {
-    sendBasicMessage(to,'*The participants in the Team 1 - 09/03/2023 are as follows:*\n1. Zane - Host\n2. Wesley Chetty - Member');
+async function viewParticipants(to) {
+    await sendBasicMessage(to,'*The participants in the Team 1 - 09/03/2023 are as follows:*\n1. Zane - Host\n2. Wesley Chetty - Member');
 }
 
-function viewSessionSummary(to) {
-    sendBasicMessage(to,'*The categories for this session:*\n1. Trust (Sentiment - Green)\n2. Exposure (Sentiment - Amber)\n\n_*To view participant sentiments, reply with the category number:*_');
+async function viewSessionSummary(to) {
+    await sendBasicMessage(to,'*The categories for this session:*\n1. Trust (Sentiment - Green)\n2. Exposure (Sentiment - Amber)\n\n_*To view participant sentiments, reply with the category number:*_');
 }
 
-function viewSessionNotes(to) {
-    sendBasicMessage(to,'Session notes');
+async function viewSessionNotes(to) {
+    await sendBasicMessage(to,'Session notes');
 }
 
 async function viewTrends(to) {
