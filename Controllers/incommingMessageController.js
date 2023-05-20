@@ -85,10 +85,10 @@ async function incomingMessageHandler(req, res) {
 
     if (messageBody.toLowerCase() === 'stop') {
       endSessionMessage(sender);
-      await endSessionDelete(sender);
+      await endSessionDelete(sender, client);
 
     } else if (sessionObj.backToMainMenu) {
-      await welcomeMessageStep(sender, sessionObj);
+      await welcomeMessageStep(sender, sessionObj, client);
 
     } else if (sessionObj.testSessionID) {
       await testSessionIDExistsStep(sender, sessionObj, messageBody);
@@ -150,7 +150,7 @@ async function testSessionExist(number) {
   }
 }
 
-async function endSessionDelete(number) {
+async function endSessionDelete(number, client) {
   try {
     const database = client.db('Entelect');
     const collection = database.collection('HealthCheck');
