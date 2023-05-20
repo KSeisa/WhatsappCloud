@@ -46,8 +46,8 @@ async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
     if (testUserInputSessionID(sessionObj)) {
         sessionObj.testSessionID = false;
         sessionObj.testSessionIDMenu = true;
+        mainMenuMessage(to);
         await updateDocumentById(to, sessionObj, client);
-      mainMenuMessage(to);
     } else {
       sendBasicMessage(to,'Session ID does not exist. Please enter another session ID.');
     }
