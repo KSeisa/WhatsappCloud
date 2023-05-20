@@ -96,7 +96,7 @@ function testIncomingMessage(req) {
     return false;
   }
 }
-connectToDatabase();
+ await connectToDatabase();
 process.on('SIGINT', async () => {
   await closeDatabaseConnection();
   process.exit(0);
