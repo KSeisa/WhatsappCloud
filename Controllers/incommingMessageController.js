@@ -63,13 +63,12 @@ async function incomingMessageHandler(req, res) {
     const sender = req.body.entry[0].changes[0].value.messages[0].from;
 
     const sessionObj = await testSessionExist(sender);
-    console.log(sessionObj);
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
       await endSessionDelete(sender);
-    } else {
-      sendBasicMessage(sender, 'Sup manski ');
+    } else if (sessionObj.backToMainMenu) {
+      await welcomeMessageStep(sender, sessionObj);
     }
   }
   
