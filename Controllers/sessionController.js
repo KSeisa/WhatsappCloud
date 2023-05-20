@@ -1,6 +1,8 @@
 const { testUserInputSessionID } = require('./healthCheckController');
 const { sendBasicMessage } = require('./whatsappMessageController');
 const { lineChart, verticalBarChart, horizontalBarChart, pieChart, doughnutChart } = require('./generateImagesController');
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
 function resetSessionVariables(sessionData) {
     sessionData.newSession = true;
@@ -10,11 +12,39 @@ function resetSessionVariables(sessionData) {
     sessionData.testSessionIDMenu = false;
 }
 
-function welcomeMessageStep(sessionData, to) {
+async function welcomeMessageStep(to, sessionObj) {
     sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!*\nReply ```sstop``` to end the session anytime.\n\nPlease enter the session ID:');
-    sessionData.backToMainMenu = false;
-    sessionData.testSessionID = true;
+    sessionObj.backToMainMenu = false;
+    sessionObj.testSessionID = true;
+    await updateDocumentById(to, sessionObj);
 }
+
+async function updateDocumentById(number, updateFields) {
+    try {
+        const client = new MongoClient(uri);
+
+      await client.connect();
+  
+      const database = client.db('Entelect');
+      const collection = database.collection('HealthCheck');
+  
+      const result = await collection.updateOne(
+        { _id: number },
+        { $set: updateFields }
+      );
+  
+      if (result.matchedCount === 1) {
+        console.log('Document updated successfully');
+      } else {
+        console.log('Document not found');
+      }
+  
+      client.close();
+      console.log('Disconnected from MongoDB');
+    } catch (err) {
+      console.error('Error connecting to MongoDB:', err);
+    }
+  }
 
 function endSessionMessage(to) {
     sendBasicMessage(to,'Please take care. Goodbye :)');
