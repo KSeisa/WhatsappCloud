@@ -91,24 +91,24 @@ async function connectToMongoDB(number) {
     const client = new MongoClient(uri);
     await client.connect();
 
-    // const database = client.db('Entelect');
-    // const collection = database.collection('HealthCheck');
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
 
-    // const existingDoc = await collection.findOne({ _id: number });
+    const existingDoc = await collection.findOne({ _id: number });
 
-    // if (existingDoc) {
-    //     console.log('Number already exists in the database:', existingDoc);
-    //   } else {
-    //     const newDoc = { 
-    //         _id: number,
-    //         backToMainMenu: true,
-    //         testSessionID: false,
-    //         userInputSessionID: '',
-    //         testSessionIDMenu: false,
-    //     };
-    //     const result = await collection.insertOne(newDoc);
-    //     console.log('New document added:', result);
-    //   }
+    if (existingDoc) {
+        console.log('Number already exists in the database:', existingDoc);
+      } else {
+        const newDoc = { 
+            _id: number,
+            backToMainMenu: true,
+            testSessionID: false,
+            userInputSessionID: '',
+            testSessionIDMenu: false,
+        };
+        const result = await collection.insertOne(newDoc);
+        console.log('New document added:', result);
+      }
     console.log('eeeeeeeeeeeeeeeeeeee');
     client.close();
   } catch (err) {
