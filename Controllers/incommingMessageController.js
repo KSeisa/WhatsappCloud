@@ -14,7 +14,7 @@ async function connectMongoDB(){
   const collection = database.collection('HealthCheck');
   return collection;
 }
-const collection = connectMongoDB();
+const collection = await connectMongoDB();
 
 // async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
