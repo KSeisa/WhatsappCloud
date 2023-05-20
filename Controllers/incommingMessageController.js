@@ -3,7 +3,7 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
         viewSessionNotes, viewSessionSummary, viewTrends } = require('./sessionController');
 const { sendBasicMessage } = require('./whatsappMessageController');
 
-// async function incomingMessageHandler(req, res) {
+// async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
 //       const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
 //       const sender = req.body.entry[0].changes[0].value.messages[0].from;
@@ -54,7 +54,7 @@ const { sendBasicMessage } = require('./whatsappMessageController');
 //     }
 // }
 
-async function incomingMessageHandler(req, res) {
+async function incomingMessageHandler(req, res, client) {
   if (testIncomingMessage(req)) {
     const messageBody = req.body.entry[0].changes[0].value.messages[0].text.body;
     const sender = req.body.entry[0].changes[0].value.messages[0].from;

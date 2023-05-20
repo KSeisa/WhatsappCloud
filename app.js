@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-//const  MongoClient  = require('mongodb').MongoClient;
+
+const  MongoClient  = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
 const app = express().use(bodyParser.json());
 
@@ -12,10 +15,8 @@ const { VERIFY_TOKEN, PORT } = process.env;
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 app.post("/webhook", async (req, res) => {
-  incomingMessageHandler(req, res);
+  incomingMessageHandler(req, res, client);
 });
-
-// const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
 // async function connectToMongoDB() {
 //   try {
