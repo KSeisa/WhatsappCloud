@@ -16,10 +16,8 @@ async function sendBasicMediaMessage(to, imageUrl) {
   try {
     const result = await bot.sendImage(to, imageUrl);
     console.log('Media message sent successfully');
-    return result;
   } catch (error) {
     console.error('Error sending media message:', error.message);
-    return null;
   }
 }
 
