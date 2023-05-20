@@ -42,12 +42,12 @@ function endSessionMessage(to) {
     sendBasicMessage(to, 'Please take care. Goodbye :)');
 }
 
-async function testSessionIDExistsStep(to, sessionObj, messageBody) {
+async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
     sessionObj.userInputSessionID = messageBody;
     if (testUserInputSessionID(sessionObj)) {
         sessionObj.testSessionID = false;
         sessionObj.testSessionIDMenu = true;
-        await updateDocumentById(to, sessionObj);
+        await updateDocumentById(to, sessionObj, client);
       mainMenuMessage(to);
     } else {
       sendBasicMessage(to,'Session ID does not exist. Please enter another session ID.');

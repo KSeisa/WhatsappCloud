@@ -91,7 +91,7 @@ async function incomingMessageHandler(req, res) {
       await welcomeMessageStep(sender, sessionObj, client);
 
     } else if (sessionObj.testSessionID) {
-      await testSessionIDExistsStep(sender, sessionObj, messageBody);
+      await testSessionIDExistsStep(sender, sessionObj, messageBody, client);
 
     } else if (sessionObj.testSessionIDMenu) {
       console.log('here');
