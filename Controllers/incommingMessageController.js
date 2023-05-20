@@ -100,7 +100,7 @@ async function testSessionExist(number) {
     if (existingDoc) {
         console.log('Number already exists in the database: ', number);
         client.close();
-        return true;
+        return existingDoc;
       } else {
         const newDoc = { 
             _id: number,
@@ -112,11 +112,11 @@ async function testSessionExist(number) {
         const result = await collection.insertOne(newDoc);
         console.log('New document added for: ', number);
         client.close();
-        return false;
+        return newDoc;
       }
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);
-    return false;
+    return null;
   }
 }
 
