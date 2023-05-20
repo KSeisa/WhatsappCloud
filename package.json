@@ -17,6 +17,6 @@
     "whatsapp-cloud-api": "^0.3.1"
   },
   "engines": {
-    "node": "12.x"
+    "node": "18.x"
   }
 }
