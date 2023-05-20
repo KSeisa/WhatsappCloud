@@ -74,7 +74,9 @@ async function incomingMessageHandler(req, res) {
     } else if (sessionObj.testSessionID) {
       await testSessionIDExistsStep(sender, sessionObj, messageBody);
 
-    } 
+    } else if (sessionObj.testSessionIDMenu) {
+      console.log('here');
+    }
   }
   
   res.sendStatus(200); 
