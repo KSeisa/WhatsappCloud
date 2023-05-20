@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 
 const app = express().use(bodyParser.json());
 
@@ -15,26 +15,26 @@ app.post("/webhook", async (req, res) => {
   incomingMessageHandler(req, res);
 });
 
-const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
-async function connectToMongoDB() {
-  try {
-    const client = new MongoClient(uri);
+// async function connectToMongoDB() {
+//   try {
+//     const client = new MongoClient(uri);
     
-    await client.connect();
+//     await client.connect();
 
-    const database = client.db('Entelect');
-    const collection = database.collection('HealthCheck');
+//     const database = client.db('Entelect');
+//     const collection = database.collection('HealthCheck');
 
-    // Perform operations on the collection
+//     // Perform operations on the collection
 
-    client.close();
-    console.log('Disconnected from MongoDB');
-  } catch (err) {
-    console.error('Error connecting to MongoDB:', err);
-    process.exit(1);
-  }
-}
+//     client.close();
+//     console.log('Disconnected from MongoDB');
+//   } catch (err) {
+//     console.error('Error connecting to MongoDB:', err);
+//     process.exit(1);
+//   }
+// }
 
 //connectToMongoDB();
 
