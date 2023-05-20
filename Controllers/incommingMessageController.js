@@ -86,10 +86,10 @@ function testIncomingMessage(req) {
   }
 }
 
-async function connectToMongoDB(number) {
+function connectToMongoDB(number) {
   try {
     const client = new MongoClient(uri);
-    await client.connect();
+  //  await client.connect();
 
     // const database = client.db('Entelect');
     // const collection = database.collection('HealthCheck');
@@ -110,7 +110,7 @@ async function connectToMongoDB(number) {
     //     console.log('New document added:', result);
     //   }
     console.log('eeeeeeeeeeeeeeeeeeee');
-    client.close();
+    //client.close();
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);
     process.exit(1);
