@@ -3,9 +3,8 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
         viewSessionNotes, viewSessionSummary, viewTrends } = require('./sessionController');
 const { sendBasicMessage } = require('./whatsappMessageController');
 
-const  MongoClient  = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
 
 // async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
@@ -66,6 +65,7 @@ async function incomingMessageHandler(req, res, client) {
 
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
+      connectToMongoDB(sender);
     } else {
       sendBasicMessage(sender, 'Sup manski ');
     }
@@ -83,6 +83,37 @@ function testIncomingMessage(req) {
     }
   } catch (error) {
     return false;
+  }
+}
+
+async function connectToMongoDB(number) {
+  try {
+    const client = new MongoClient(uri);
+    await client.connect();
+
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
+
+    const existingDoc = await collection.findOne({ _id: number });
+
+    if (existingDoc) {
+        console.log('Number already exists in the database:', existingDoc);
+      } else {
+        const newDoc = { 
+            _id: number,
+            backToMainMenu: true,
+            testSessionID: false,
+            userInputSessionID: '',
+            testSessionIDMenu: false,
+        };
+        const result = await collection.insertOne(newDoc);
+        console.log('New document added:', result);
+      }
+
+    client.close();
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1);
   }
 }
    
