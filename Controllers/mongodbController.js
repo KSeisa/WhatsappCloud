@@ -1,10 +1,17 @@
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+
+const client = new MongoClient(uri);
+
 async function connectToDatabase() {
     try {
       await client.connect();
       console.log('Connected to MongoDB');
+      return client;
     } catch (err) {
       console.error('Error connecting to MongoDB:', err);
     }
+    return null;
 }
   
 async function closeDatabaseConnection() {

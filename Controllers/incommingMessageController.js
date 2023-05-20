@@ -4,10 +4,7 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
 const { sendBasicMessage } = require('./whatsappMessageController');
 const { connectToDatabase, closeDatabaseConnection, testSessionExist, endSessionDelete } = require('./mongodbController');
 
-const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
-
-const client = new MongoClient(uri);
+const client = connectToDatabase();
 
 async function incomingMessageHandler(req, res) {
   if (testIncomingMessage(req)) {
@@ -76,8 +73,6 @@ function testIncomingMessage(req) {
     return false;
   }
 }
-
-connectToDatabase();
 
 process.on('SIGINT', async () => {
   await closeDatabaseConnection();
