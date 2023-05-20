@@ -74,7 +74,7 @@ async function incomingMessageHandler(req, res) {
       await endSessionDelete(sender, collection);
 
     } else if (sessionObj.backToMainMenu) {
-      await welcomeMessageStep(sender, sessionObj);
+      await welcomeMessageStep(sender, sessionObj,collection);
 
     } else if (sessionObj.testSessionID) {
       await testSessionIDExistsStep(sender, sessionObj, messageBody);
