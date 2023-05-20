@@ -12,7 +12,7 @@ async function sendBasicMessage(to, body) {
   }
 }
 
-async function sendBasicMediaMessage(to, body, imageUrl) {
+async function sendBasicMediaMessage(to, imageUrl) {
   try {
     const result = await bot.sendImage(to, imageUrl);
     console.log('Media message sent successfully');

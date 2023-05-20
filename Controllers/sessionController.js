@@ -75,7 +75,7 @@ async function viewSessionNotes(to) {
 
 async function viewTrends(to) {
     const imageUrl = await pieChart();
-    sendBasicMediaMessage(to, 'Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel', imageUrl);
+    sendBasicMediaMessage(to, imageUrl);
 }
   
 module.exports = {
