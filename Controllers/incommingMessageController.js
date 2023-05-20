@@ -131,7 +131,6 @@ async function testSessionExist(number) {
 
     if (existingDoc) {
         console.log('Number already exists in the database: ', number);
-        client.close();
         return existingDoc;
       } else {
         const newDoc = { 
@@ -143,7 +142,6 @@ async function testSessionExist(number) {
         };
         const result = await collection.insertOne(newDoc);
         console.log('New document added for: ', number);
-        client.close();
         return newDoc;
       }
   } catch (err) {
