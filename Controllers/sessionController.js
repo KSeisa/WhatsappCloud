@@ -1,4 +1,4 @@
-const { testUserInputSessionID } = require('./healthCheckController');userInputSessionID
+const { testUserInputSessionID } = require('./healthCheckController');
 const { sendBasicMessage } = require('./whatsappMessageController');
 const { lineChart, verticalBarChart, horizontalBarChart, pieChart, doughnutChart } = require('./generateImagesController');
 const { MongoClient } = require('mongodb');
