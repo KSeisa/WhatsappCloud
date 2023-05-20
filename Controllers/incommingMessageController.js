@@ -67,9 +67,14 @@ async function incomingMessageHandler(req, res) {
     if (messageBody.toLowerCase() === 'sstop') {
       endSessionMessage(sender);
       await endSessionDelete(sender);
+
     } else if (sessionObj.backToMainMenu) {
       await welcomeMessageStep(sender, sessionObj);
-    }
+
+    } else if (sessionData.testSessionID) {
+      await testSessionIDExistsStep(sender, sessionObj, messageBody);
+
+    } 
   }
   
   res.sendStatus(200); 
