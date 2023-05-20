@@ -36,7 +36,7 @@ async function connectToMongoDB() {
   }
 }
 
-connectToMongoDB();
+//connectToMongoDB();
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
