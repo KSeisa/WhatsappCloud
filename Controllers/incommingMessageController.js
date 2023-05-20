@@ -86,7 +86,7 @@ function testIncomingMessage(req) {
   }
 }
 
-function connectToMongoDB(number) {
+async function connectToMongoDB(number) {
   try {
     const client = new MongoClient(uri);
   //  await client.connect();
