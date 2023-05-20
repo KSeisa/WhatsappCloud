@@ -6,11 +6,15 @@ const { sendBasicMessage } = require('./whatsappMessageController');
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
 
-const client = new MongoClient(uri);
-await client.connect();
+async function connectMongoDB(){
+  const client = new MongoClient(uri);
+  await client.connect();
 
-const database = client.db('Entelect');
-const collection = database.collection('HealthCheck');
+  const database = client.db('Entelect');
+  const collection = database.collection('HealthCheck');
+  return collection;
+}
+const collection = connectMongoDB();
 
 // async function incomingMessageHandler(req, res, client) {
 //     if (testIncommingMessage(req)) {
