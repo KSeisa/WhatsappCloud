@@ -18,26 +18,26 @@ app.post("/webhook", async (req, res) => {
   incomingMessageHandler(req, res, client);
 });
 
-// async function connectToMongoDB() {
-//   try {
-//     const client = new MongoClient(uri);
+async function connectToMongoDB() {
+  try {
+    const client = new MongoClient(uri);
     
-//     await client.connect();
+    await client.connect();
 
-//     const database = client.db('Entelect');
-//     const collection = database.collection('HealthCheck');
+    const database = client.db('Entelect');
+    const collection = database.collection('HealthCheck');
 
-//     // Perform operations on the collection
+    // Perform operations on the collection
 
-//     client.close();
-//     console.log('Disconnected from MongoDB');
-//   } catch (err) {
-//     console.error('Error connecting to MongoDB:', err);
-//     process.exit(1);
-//   }
-// }
+    client.close();
+    console.log('Disconnected from MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1);
+  }
+}
 
-//connectToMongoDB();
+connectToMongoDB();
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
