@@ -7,7 +7,7 @@ const app = express().use(bodyParser.json());
 
 const { incomingMessageHandler } = require('./Controllers/incommingMessageController');
 
-const { VERIFY_TOKEN, PORT, MONGODB_URI } = process.env;
+const { VERIFY_TOKEN, PORT } = process.env;
 
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
