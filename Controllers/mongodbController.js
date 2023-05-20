@@ -65,9 +65,7 @@ async function endSessionDelete(number, client) {
 } 
 
 module.exports = {
-    closeDatabaseConnection,
     updateDocumentById,
-    connectToDatabase,
     testSessionExist,
     endSessionDelete,
 }
