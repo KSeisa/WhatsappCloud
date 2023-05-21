@@ -57,7 +57,7 @@ async function incomingMessageHandler(req, res) {
         await viewTrends(sender);
 
       } else if (messageBody === '5') {
-        await sendBasicMessage(sender,'Canceled option');
+        await sendBasicMessage(sender,'Canceled option 🚫');
         await resetSessionVariables(sender, sessionObj, client);
         await welcomeMessageStep(sender, sessionObj, client);
 

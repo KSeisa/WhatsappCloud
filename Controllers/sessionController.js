@@ -31,7 +31,7 @@ async function resetSessionVariables(to, sessionObj, client) {
 }
 
 async function welcomeMessageStep(to, sessionObj, client) {
-  sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!* 😆\n🛑 Reply *```stop```* to end the session anytime.\n\nPlease enter the session ID 🫣:');
+  sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!* 😆\nReply *```stop```* to end the session anytime.\n\nPlease enter the session ID 🫣:');
   sessionObj.backToMainMenu = false;
   sessionObj.testSessionID = true;
   await updateDocumentById(to, sessionObj, client);
@@ -58,7 +58,7 @@ async function mainMenuMessage(to) {
 }
 
 async function invalidOptionOccur(to) {
-    await sendBasicMessage(to,'*Invalid option*\nPlease select the data you want to be displayed:\n1. View Participants 👥\n2. View Session Summary 📋\n3. View Session notes 📝\n4. View Trends 📊\n5. Cancel 🔙');
+    await sendBasicMessage(to,'*Invalid option* 🛑\nPlease select the data you want to be displayed:\n1. View Participants 👥\n2. View Session Summary 📋\n3. View Session notes 📝\n4. View Trends 📊\n5. Cancel 🔙');
 }
 
 async function viewParticipants(to) {
