@@ -2,21 +2,6 @@ const { testUserInputSessionID } = require('./healthCheckController');
 const { sendBasicMessage, sendBasicMediaMessage } = require('./whatsappMessageController');
 const { lineChart, verticalBarChart, horizontalBarChart, pieChart, doughnutChart } = require('./generateImagesController');
 
-async function resetSessionVariables(to, sessionObj, client) {
-    sessionObj.backToMainMenu = true;
-    sessionObj.testSessionID = false;
-    sessionObj.userInputSessionID = '';
-    sessionObj.testSessionIDMenu = false;
-    await updateDocumentById(to, sessionObj, client);
-}
-
-async function welcomeMessageStep(to, sessionObj, client) {
-    sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!*\nReply ```stop``` to end the session anytime.\n\nPlease enter the session ID:');
-    sessionObj.backToMainMenu = false;
-    sessionObj.testSessionID = true;
-    await updateDocumentById(to, sessionObj, client);
-}
-
 async function updateDocumentById(number, updateFields, client) {
     try {
       const database = client.db('Entelect');
@@ -35,10 +20,25 @@ async function updateDocumentById(number, updateFields, client) {
     } catch (err) {
       console.error('Error connecting to MongoDB:', err);
     }
-  }
+}
+
+async function resetSessionVariables(to, sessionObj, client) {
+  sessionObj.backToMainMenu = true;
+  sessionObj.testSessionID = false;
+  sessionObj.userInputSessionID = '';
+  sessionObj.testSessionIDMenu = false;
+  await updateDocumentById(to, sessionObj, client);
+}
+
+async function welcomeMessageStep(to, sessionObj, client) {
+  sendBasicMessage(to,'*Welcome to Entelect Health Check Chatbot!* 😆\n🛑 Reply *```stop```* to end the session anytime.\n\nPlease enter the session ID 🫣:');
+  sessionObj.backToMainMenu = false;
+  sessionObj.testSessionID = true;
+  await updateDocumentById(to, sessionObj, client);
+}
 
 async function endSessionMessage(to) {
-    await sendBasicMessage(to, 'Please take care. Goodbye :)');
+    await sendBasicMessage(to, 'Please take care. Goodbye 👋');
 }
 
 async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
@@ -49,16 +49,16 @@ async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
         mainMenuMessage(to);
         await updateDocumentById(to, sessionObj, client);
     } else {
-      sendBasicMessage(to,'Session ID does not exist. Please enter another session ID.');
+      sendBasicMessage(to,'Session ID does not exist. Please enter another session ID 🫣: ');
     }
 }
 
 async function mainMenuMessage(to) {
-    await sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
+    await sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants 👥\n2. View Session Summary 📋\n3. View Session notes 📝\n4. View Trends 📊\n5. Cancel 🔙');
 }
 
 async function invalidOptionOccur(to) {
-    await sendBasicMessage(to,'*Invalid option*\nPlease select the data you want to be displayed:\n1. View Participants\n2. View Session Summary\n3. View Session notes\n4. View Trends\n5. Cancel');
+    await sendBasicMessage(to,'*Invalid option*\nPlease select the data you want to be displayed:\n1. View Participants 👥\n2. View Session Summary 📋\n3. View Session notes 📝\n4. View Trends 📊\n5. Cancel 🔙');
 }
 
 async function viewParticipants(to) {
