@@ -11,7 +11,6 @@ const { VERIFY_TOKEN, PORT } = process.env;
 app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 app.post("/webhook", async (req, res) => {
-  console.log('sss');
   incomingMessageHandler(req, res);
 }); 
 

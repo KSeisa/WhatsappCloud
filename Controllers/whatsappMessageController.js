@@ -20,7 +20,7 @@ async function sendBasicMediaMessage(to, imageUrl) {
     console.error('Error sending media message:', error.message);
   }
 }
-////////////////////
+
 // const axios = require('axios');
 // const { AUTH_TOKEN, PHONE_NUMBER_ID } = process.env;
 
