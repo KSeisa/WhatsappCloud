@@ -6,6 +6,9 @@ const bot = createBot(PHONE_NUMBER_ID, AUTH_TOKEN);
 
 async function sendBasicMessage(to, body) {
   try {
+    console.log(AUTH_TOKEN);
+    console.log(PHONE_NUMBER_ID);
+    console.log(bot);
     const result = await bot.sendText(to, body);
   } catch (error) {
     console.error('Error sending message:', error.message);
