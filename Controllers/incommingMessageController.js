@@ -4,7 +4,8 @@ const { welcomeMessageStep, resetSessionVariables, endSessionMessage,
 const { sendBasicMessage } = require('./whatsappMessageController');
 
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://dbUser:dbUserPassword@cluster0.lh84toi.mongodb.net/?retryWrites=true&w=majority";
+const { MONGODB_URL } = process.env;
+const uri = MONGODB_URL;
 
 const client = new MongoClient(uri);
 
