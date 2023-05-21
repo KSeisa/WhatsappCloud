@@ -52,7 +52,7 @@ async function testSessionIDExistsStep(to, sessionObj, messageBody, client) {
       sendBasicMessage(to,'Session ID does not exist. Please enter another session ID 🫣: ');
     }
 }
-
+ 
 async function mainMenuMessage(to) {
     await sendBasicMessage(to,'Please select the data you want to be displayed:\n1. View Participants 👥\n2. View Session Summary 📋\n3. View Session notes 📝\n4. View Trends 📊\n5. Cancel 🔙');
 }
