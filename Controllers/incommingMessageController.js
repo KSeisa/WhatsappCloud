@@ -5,9 +5,9 @@ const { sendBasicMessage } = require('./whatsappMessageController');
 
 const { MongoClient } = require('mongodb');
 const { MONGODB_URL } = process.env;
-const uri = MONGODB_URL;
+const url = MONGODB_URL;
 
-const client = new MongoClient(uri);
+const client = new MongoClient(url);
 
 async function connectToDatabase() {
   try {
