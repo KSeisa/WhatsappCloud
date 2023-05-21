@@ -62,7 +62,7 @@ async function invalidOptionOccur(to) {
 }
 
 async function viewParticipants(to) {
-    await sendBasicMessage(to,'*The participants in the Team 1 - 09/03/2023 are as follows:*\n1. Zane - Host\n2. Wesley Chetty - Member');
+    await sendBasicMessage(to,'*The participants in the Team 1 - 09/03/2023 are as follows:*\n1. Zane - Host\n2. Wesley Chetty - Member\n3. Anke Stoltz - Member\n4. André Croukamp - Member');
 }
 
 async function viewSessionSummary(to) {
