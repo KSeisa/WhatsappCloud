@@ -12,7 +12,7 @@ app.listen(PORT, () => console.log(`webhook is listening on port ${PORT}`));
 
 app.post("/webhook", async (req, res) => {
   incomingMessageHandler(req, res);
-});
+}); 
 
 app.get("/webhook", (req, res) => {
   let mode = req.query["hub.mode"];
